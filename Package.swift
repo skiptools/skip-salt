@@ -19,7 +19,7 @@ let package = Package(
         .package(url: "https://github.com/jedisct1/swift-sodium.git", from: "0.9.1"),
     ],
     targets: [
-        .target(name: "SkipSalt", dependencies: [.product(name: "SkipFoundation", package: "skip-foundation"), .product(name: "SkipFFI", package: "skip-ffi"), .product(name: "Clibsodium", package: "swift-sodium")], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
+        .target(name: "SkipSalt", dependencies: [.product(name: "SkipFoundation", package: "skip-foundation"), .product(name: "SkipFFI", package: "skip-ffi"), .product(name: "Sodium", package: "swift-sodium")], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
         .testTarget(name: "SkipSaltTests", dependencies: ["SkipSalt", .product(name: "SkipTest", package: "skip")], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
     ]
 )

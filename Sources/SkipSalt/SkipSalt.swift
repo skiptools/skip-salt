@@ -4,15 +4,43 @@
 
 #if !SKIP
 import Clibsodium
+@_exported import Sodium
 #else
 import SkipFFI
 private let Clibsodium = SodiumLibrary()
 #endif
 
-public class Sodium {
+
+public extension Sodium {
     /// The version of libsodium
-    public static let sodiumVersion = String(cString: Clibsodium.sodium_version_string())
+    static let sodiumVersion = String(cString: Clibsodium.sodium_version_string())
 }
+
+#if SKIP
+public struct Sodium {
+    // SKIP TODO
+
+    //public let box = Box()
+    //public let secretBox = SecretBox()
+    //public let genericHash = GenericHash()
+    //public let pwHash = PWHash()
+    //public let randomBytes = RandomBytes()
+    //public let shortHash = ShortHash()
+    //public let sign = Sign()
+    //public let utils = Utils()
+    //public let keyExchange = KeyExchange()
+    //public let auth = Auth()
+    //public let stream = Stream()
+    //public let keyDerivation = KeyDerivation()
+    //public let secretStream = SecretStream()
+    //public let aead = Aead()
+
+    //public init() {
+    //    _ = Sodium.once
+    //}
+}
+
+#endif
 
 #if SKIP
 
