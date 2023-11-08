@@ -1,0 +1,9 @@
+# Configuration file for https://skip.tools project
+#
+# Kotlin dependencies and Gradle build options for this module can be configured here
+build:
+  contents:
+    - block: 'dependencies'
+      contents:
+        # Android-specific libsodium contains jni/arm64-v8a/libsodiumjni.so, jni/armeabi-v7a/libsodiumjni.so, jni/x86_64/libsodiumjni.so, and jni/x86/libsodiumjni.so
+        - 'implementation("com.github.joshjdevl.libsodiumjni:libsodium-jni-aar:2.0.2")'
