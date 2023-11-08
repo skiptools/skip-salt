@@ -13,7 +13,9 @@ private let Clibsodium = SodiumLibrary()
 
 public extension Sodium {
     /// The version of libsodium
-    static let sodiumVersion = String(cString: Clibsodium.sodium_version_string())
+    static let versionString = String(cString: Clibsodium.sodium_version_string())
+    static let versionMajor = Clibsodium.sodium_library_version_major()
+    static let versionMinor = Clibsodium.sodium_library_version_minor()
 }
 
 #if SKIP
@@ -66,6 +68,8 @@ private func SodiumLibrary() -> SodiumLibrary {
 
 private protocol SodiumLibrary : com.sun.jna.Library {
     func sodium_version_string() -> OpaquePointer
+    func sodium_library_version_major() -> Int32
+    func sodium_library_version_minor() -> Int32
 }
 
 ///**
