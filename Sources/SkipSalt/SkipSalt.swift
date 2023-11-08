@@ -30,7 +30,7 @@ private func SodiumLibrary() -> SodiumLibrary {
         // GRADLE> Tests on Pixel_6_API_33(AVD) - 13 failed: There was 1 failure(s).
 
         // from brew install libsodium: /opt/homebrew/lib/libsodium.dylib
-        System.setProperty("jna.library.path", "/opt/homebrew/lib/:/usr/local/homebrew/lib/:" + System.getProperty("jna.library.path"));
+        System.setProperty("jna.library.path", "/opt/homebrew/lib/:/usr/local/lib/:" + System.getProperty("jna.library.path"));
 
         return com.sun.jna.Native.load("sodium", (SodiumLibrary.self as kotlin.reflect.KClass).java)
     }

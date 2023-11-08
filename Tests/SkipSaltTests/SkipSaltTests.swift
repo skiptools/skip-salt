@@ -19,7 +19,7 @@ let isRobolectric = isJava && !isAndroid
 @available(macOS 13, *)
 final class SkipSaltTests: XCTestCase {
     func testSkipSalt() throws {
-        if isRobolectric && !FileManager.default.isExecutableFile(atPath: "/opt/homebrew/lib/libsodium.dylib") && !FileManager.default.isExecutableFile(atPath: "/usr/local/homebrew/lib/libsodium.dylib") {
+        if isRobolectric && !FileManager.default.isExecutableFile(atPath: "/opt/homebrew/lib/libsodium.dylib") && !FileManager.default.isExecutableFile(atPath: "/usr/local/lib/libsodium.dylib") {
             // cannot load libsodium on Robolectric: it is a static archive (libsodium.a) when built as part of Clibsodium, and the Android libsodium-jni-aar package only
             // so we can install it manually with: brew install libsodium
             throw XCTSkip("Sodium tests skipped on Robolectric due to lack of shared library to load")
