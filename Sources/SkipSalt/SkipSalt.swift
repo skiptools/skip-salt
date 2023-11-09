@@ -2,6 +2,7 @@
 // under the terms of the GNU Lesser General Public License 3.0
 // as published by the Free Software Foundation https://fsf.org
 
+import Foundation
 #if !SKIP
 import Clibsodium
 @_exported import Sodium
@@ -11,22 +12,31 @@ private let Clibsodium = SodiumLibrary()
 #endif
 
 
+#if SKIP
+public typealias Sodium = SkipSodium
+public typealias Bytes = SkipBytes
+public typealias RandomBytes = SkipRandomBytes
+#endif
+
+#if !SKIP
 public extension Sodium {
     /// The version of libsodium
-    static let versionString = String(cString: Clibsodium.sodium_version_string())
-    static let versionMajor = Clibsodium.sodium_library_version_major()
-    static let versionMinor = Clibsodium.sodium_library_version_minor()
+    static let versionString: String = String(cString: Clibsodium.sodium_version_string())
+    static let versionMajor: Int32 = Clibsodium.sodium_library_version_major()
+    static let versionMinor: Int32 = Clibsodium.sodium_library_version_minor()
 }
+#endif
 
-#if SKIP
-public struct Sodium {
-    // SKIP TODO
+public struct SkipSodium {
+    static let versionString: String = String(cString: Clibsodium.sodium_version_string())
+    static let versionMajor: Int32 = Clibsodium.sodium_library_version_major()
+    static let versionMinor: Int32 = Clibsodium.sodium_library_version_minor()
 
     //public let box = Box()
     //public let secretBox = SecretBox()
     //public let genericHash = GenericHash()
     //public let pwHash = PWHash()
-    //public let randomBytes = RandomBytes()
+    public let randomBytes = SkipRandomBytes()
     //public let shortHash = ShortHash()
     //public let sign = Sign()
     //public let utils = Utils()
@@ -37,12 +47,97 @@ public struct Sodium {
     //public let secretStream = SecretStream()
     //public let aead = Aead()
 
-    //public init() {
-    //    _ = Sodium.once
-    //}
+    public init() {
+        _ = SkipSodium.once
+    }
 }
 
-#endif
+extension SkipSodium {
+    private static let once: Void = {
+        guard Clibsodium.sodium_init() >= 0 else {
+            fatalError("Failed to initialize libsodium")
+        }
+    }()
+}
+
+
+public typealias SkipBytes = Array<UInt8>
+
+extension Array where Element == UInt8 {
+//    init (count bytes: Int) {
+//        self.init(repeating: 0, count: bytes)
+//    }
+
+    public var utf8String: String? {
+        return String(data: Data(self), encoding: String.Encoding.utf8)
+    }
+}
+
+//extension ArraySlice where Element == UInt8 {
+//    var bytes: Bytes { return Bytes(self) }
+//}
+//
+//public extension String {
+//    var bytes: Bytes { return Bytes(self.utf8) }
+//}
+
+public struct SkipRandomBytes {
+    public let SeedBytes = Int64(Clibsodium.randombytes_seedbytes())
+}
+
+extension SkipRandomBytes {
+    /**
+     Returns a `Bytes object of length `length` containing an unpredictable sequence of bytes.
+
+     - Parameter length: The number of bytes to generate.
+
+     - Returns: The generated data.
+     */
+//    public func buf(length: Int) -> Bytes? {
+//        guard length >= 0 else { return nil }
+//        var output = Bytes(count: length)
+//        Clibsodium.randombytes_buf(&output, length)
+//        return output
+//    }
+
+    /**
+     - Returns: An unpredictable value between 0 and 0xffffffff (included).
+     */
+    public func random() -> UInt32 {
+        return Clibsodium.randombytes_random()
+    }
+
+    /**
+     Returns an unpredictable value between 0 and `upper_bound` (excluded). Unlike randombytes_random() % upper_bound, it does its best to guarantee a uniform distribution of the possible output values even when upper_bound is not a power of 2.
+
+     - Parameter upperBound: The upper bound (excluded) of the returned value.
+
+     - Returns: The unpredictable value.
+     */
+    public func uniform(upperBound: UInt32) -> UInt32 {
+        return Clibsodium.randombytes_uniform(upperBound)
+    }
+
+//    /**
+//     Returns a deterministic stream of unbiased bits derived from a seed.
+//
+//     - Parameter length: The number of bytes to generate.
+//     - Parameter seed: The seed.
+//
+//     - Returns: The generated data.
+//     */
+//    public func deterministic(length: Int, seed: Bytes) -> Bytes? {
+//        guard length >= 0,
+//              seed.count == SeedBytes,
+//              Int64(length) <= 0x4000000000 as Int64
+//        else { return nil }
+//
+//        var output = Bytes(count: length)
+//        Clibsodium.randombytes_buf_deterministic(&output, length, seed)
+//        return output
+//    }
+}
+
 
 #if SKIP
 
@@ -67,9 +162,16 @@ private func SodiumLibrary() -> SodiumLibrary {
 }
 
 private protocol SodiumLibrary : com.sun.jna.Library {
+    func sodium_init() -> Int32
+
     func sodium_version_string() -> OpaquePointer
     func sodium_library_version_major() -> Int32
     func sodium_library_version_minor() -> Int32
+
+    func randombytes_seedbytes() -> Int64
+    func randombytes_random() -> UInt32
+    func randombytes_uniform(_ upperBound: UInt32) -> UInt32
+
 }
 
 ///**

@@ -504,7 +504,7 @@ final class SkipSaltTests: XCTestCase {
         #if SKIP
         throw XCTSkip("SKIP TODO")
         #else
-        let randomLen = 100 + Int(sodium.randomBytes.uniform(upperBound: 100))
+        let randomLen = 100 + Int(sodium.randomBytes.uniform(upperBound: UInt32(100)))
         let random1 = sodium.randomBytes.buf(length: randomLen)!
         let random2 = sodium.randomBytes.buf(length: randomLen)!
         XCTAssertEqual(random1.count, randomLen)
