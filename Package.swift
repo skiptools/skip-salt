@@ -10,7 +10,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v16), .macOS(.v13), .tvOS(.v16), .watchOS(.v9), .macCatalyst(.v16)],
     products: [
-        .library(name: "SkipSalt", type: .dynamic, targets: ["SkipSalt"]),
+        .library(name: "SkipSalt", targets: ["SkipSalt"]),
     ],
     dependencies: [
         .package(url: "https://source.skip.tools/skip.git", from: "0.7.21"),
