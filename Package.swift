@@ -13,9 +13,9 @@ let package = Package(
         .library(name: "SkipSalt", targets: ["SkipSalt"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip.git", from: "0.7.21"),
-        .package(url: "https://source.skip.tools/skip-foundation.git", from: "0.0.0"),
-        .package(url: "https://source.skip.tools/skip-ffi.git", from: "0.0.0"),
+        .package(url: "https://source.skip.tools/skip.git", from: "0.8.46"),
+        .package(url: "https://source.skip.tools/skip-foundation.git", from: "0.6.11"),
+        .package(url: "https://source.skip.tools/skip-ffi.git", from: "0.3.2"),
         .package(url: "https://github.com/jedisct1/swift-sodium.git", from: "0.9.1"),
     ],
     targets: [
