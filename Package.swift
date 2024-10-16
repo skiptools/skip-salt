@@ -10,13 +10,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v16), .macOS(.v13), .tvOS(.v16), .watchOS(.v9), .macCatalyst(.v16)],
     products: [
-        .library(name: "SkipSalt", type: .dynamic, targets: ["SkipSalt"]),
+        .library(name: "SkipSalt", targets: ["SkipSalt"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip.git", from: "0.9.4"),
-        .package(url: "https://source.skip.tools/skip-foundation.git", from: "0.7.0"),
-        .package(url: "https://source.skip.tools/skip-ffi.git", from: "0.3.3"),
-        .package(url: "https://github.com/jedisct1/swift-sodium.git", from: "0.9.1"),
+        .package(url: "https://source.skip.tools/skip.git", from: "1.0.0"),
+        .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
+        .package(url: "https://source.skip.tools/skip-ffi.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://github.com/jedisct1/swift-sodium.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "SkipSalt", dependencies: [.product(name: "SkipFoundation", package: "skip-foundation"), .product(name: "SkipFFI", package: "skip-ffi"), .product(name: "Sodium", package: "swift-sodium")], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
