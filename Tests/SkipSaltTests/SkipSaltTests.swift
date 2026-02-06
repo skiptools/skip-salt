@@ -30,7 +30,7 @@ final class SkipSaltTests: XCTestCase {
         // isMacOS: comes from Clibsodium
         XCTAssertEqual(10, sodiumLibrary.sodium_library_version_major())
         XCTAssertEqual(isAndroid ? 2 : 3, sodiumLibrary.sodium_library_version_minor())
-        XCTAssertEqual(isRobolectric ? "1.0.19" : isAndroid ? "1.0.17" : "1.0.18", sodiumLibrary.sodium_version_string())
+        XCTAssertEqual(isRobolectric ? "1.0.19" : isAndroid ? "1.0.17" : "1.0.21", sodiumLibrary.sodium_version_string())
     }
 
     // Tests taken from: https://github.com/jedisct1/swift-sodium/blob/master/Tests/SodiumTests/ReadmeTests.swift
