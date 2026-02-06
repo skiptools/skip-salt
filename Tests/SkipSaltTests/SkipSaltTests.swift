@@ -28,7 +28,7 @@ final class SkipSaltTests: XCTestCase {
         // isRobolectric: comes from brew install libsodium
         // isAndroid: comes from libsodium-jni-aar-2.0.2.aar (e.g., jni/arm64-v8a/libsodiumjni.so)
         // isMacOS: comes from Clibsodium
-        XCTAssertEqual(10, sodiumLibrary.sodium_library_version_major())
+        XCTAssertEqual(26, sodiumLibrary.sodium_library_version_major())
         XCTAssertEqual(isAndroid ? 2 : 3, sodiumLibrary.sodium_library_version_minor())
         XCTAssertEqual(isRobolectric ? "1.0.19" : isAndroid ? "1.0.17" : "1.0.21", sodiumLibrary.sodium_version_string())
     }
